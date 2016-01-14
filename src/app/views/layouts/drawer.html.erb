@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>地形图绘制系统</title>
+  <link rel="stylesheet" href="/AdminLTE2/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/AdminLTE2/dist/css/skins/skin-red-light.min.css">
+  <link rel="stylesheet" href="/AdminLTE2/plugins/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/AdminLTE2/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/AdminLTE2/ol3/ol.css">
+  <link rel="stylesheet" href="/AdminLTE2/dist/css/karte.css">
+
+  <%= csrf_meta_tags %>
+</head>
+<body class="skin-red-light">
+<header class="main-header">
+  <a href="/" class="logo">
+    Karte
+  </a>
+  <!-- Header Navbar: style can be found in header.less -->
+  <nav class="navbar navbar-static-top" role="navigation">
+    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <span class="sr-only">Toggle navigation</span>
+    </a>
+
+    <div class="navbar-collapse pull-left collapse">
+      <ul class="nav navbar-nav">
+        <li><span>所有更改均已保存到云端</span></li>
+      </ul>
+    </div>
+
+    <!-- Navbar Right Menu -->
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <!-- User Account: style can be found in dropdown.less -->
+        <li>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            welcome! , <%= @u.try('nickname') || 'visitor' %>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<div class="content-wrapper">
+  <%= yield %>
+</div>
+</body>
+</html>

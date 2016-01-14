@@ -1,14 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Src</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
+  <title>地形图绘制系统</title>
+  <link rel="stylesheet" href="/AdminLTE2/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/AdminLTE2/dist/css/skins/skin-red-light.min.css">
+  <link rel="stylesheet" href="/AdminLTE2/plugins/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/AdminLTE2/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/AdminLTE2/ol3/ol.css">
+  <link rel="stylesheet" href="/AdminLTE2/dist/css/karte.css">
+
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="skin-red-light">
+<header class="main-header">
+  <a href="/" class="logo">
+    Karte
+  </a>
+  <!-- Header Navbar: style can be found in header.less -->
+  <nav class="navbar navbar-static-top" role="navigation">
+    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <span class="sr-only">Toggle navigation</span>
+    </a>
 
-<%= yield %>
+    <div class="navbar-collapse pull-left collapse">
+      <ul class="nav navbar-nav">
+        <li><span>准备就绪</span></li>
+      </ul>
+    </div>
 
+    <!-- Navbar Right Menu -->
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <!-- User Account: style can be found in dropdown.less -->
+        <li>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            welcome! , <%= @u.try('nickname') || 'visitor' %>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="main-menu" tabindex="-1" style="left:0px">
+    <ul class="tab-head">
+      <li class="close-menu" ><i class="fa fa-chevron-left"></i></li>
+      <li> <span>新建</span></li>
+      <li> <span>打开</span></li>
+      <li> <span>另存为</span></li>
+    </ul>
+    <div class="tab-body">
+
+    </div>
+  </div>
+</header>
+<div class="content-wrapper">
+  <%= yield %>
+</div>
 </body>
 </html>

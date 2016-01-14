@@ -1,0 +1,166 @@
+.nav>li>span {
+    position: relative;
+    display: block;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: white;
+}
+
+div .map-editor-container {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-family: Arial,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei", sans-serif;
+}
+
+.map-editor {
+    position: absolute;
+    top: 82px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.main-menu {
+    position: fixed;
+    top: 0;
+    left: -740px;
+    bottom: 0;
+    z-index: 2001;
+    width: 722px;
+    border: 1px solid #fb6a6a;
+    background-color: #fff;
+    user-select: none;
+}
+
+.main-menu .tab-head {
+    width: 120px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    list-style: none;
+    background-color: #fc8383;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.main-menu .tab-head li {
+    padding: 0 26px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+    cursor: default;
+}
+
+.main-menu .tab-head li:hover {
+    background-color: #fb6a6a;
+}
+
+.main-menu .tab-head li.close-menu:hover {
+    background: -moz-linear-gradient(left,rgba(255,255,255,.3) 0,rgba(255,255,255,0) 100%);
+    background: -webkit-gradient(linear,left top,right top,color-stop(0,rgba(255,255,255,.3)),color-stop(100%,rgba(255,255,255,0)));
+    background: -webkit-linear-gradient(left,rgba(255,255,255,.3) 0,rgba(255,255,255,0) 100%);
+    background: -o-linear-gradient(left,rgba(255,255,255,.3) 0,rgba(255,255,255,0) 100%);
+    background: -ms-linear-gradient(left,rgba(255,255,255,.3) 0,rgba(255,255,255,0) 100%);
+    background: linear-gradient(to right,rgba(255,255,255,.3) 0,rgba(255,255,255,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4dffffff', endColorstr='#00ffffff', GradientType=1);
+}
+
+.main-menu .tab-head li.close-menu {
+    margin: 10px 0 20px;
+}
+
+.main-menu .tab-body {
+    width: 600px;
+    position: absolute;
+    top: 0;
+    left: 120px;
+    bottom: 0;
+}
+
+.content-wrapper, .right-side, .main-footer {
+    margin-left: 0;
+}
+
+.fields {
+    border-top: dashed 1px;
+    padding-top: 20px;
+    padding-bottom: 12px;
+}
+
+.modal-body{
+    max-height: 800px;
+    overflow-y: auto;
+}
+
+@media only screen and (max-height: 900px) {
+    .modal-body{
+        max-height: 600px;
+    }
+}
+
+@media only screen and (max-height: 600px) {
+    .modal-body{
+        max-height: 450px;
+    }
+}
+
+@media only screen and (max-height: 500px) {
+    .modal-body{
+        max-height: 300px;
+    }
+}
+
+.pagination {
+    margin: 3px 0;
+}
+
+.list-counter {
+    float:left;
+    padding-left: 10px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.select2-results__option {
+    height: 33px;
+}
+
+.select2-results__option:hover option {
+    color:white;
+}
+
+table td {
+    vertical-align: middle !important;
+}
+
+.expense-print-info {
+    border-bottom: 1px solid #000;
+    margin-bottom: 20px;
+}
+
+.table {
+    font-size: 15px;
+}
+
+.table-print {
+    font-family: "Microsoft Yahei";
+}
+
+.table-print th {
+    text-align: center !important;
+}
+
+.table-print, .table-print tr, .table-print th, .table-print td {
+    border: 1px solid #000 !important;
+    text-overflow: ellipsis;
+}
+
+.ul-responsive {
+    max-height: 300px;
+    overflow-y: auto;
+}
