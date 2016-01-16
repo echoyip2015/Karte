@@ -7,8 +7,6 @@ class Map
 
   field :extname, type: String
 
-  mount_uploader :data, MapUploader
-
   mount_uploader :json_data, MapUploader
 
   field :create_time, type: DateTime, default: -> { DateTime.now }
@@ -23,13 +21,23 @@ class Map
     instance.save!
   end
 
+  def export(file_type)
+    tmp_path = Rails.root.to_s + "/tmp/maps/#{self.title}.json"
+    tmp_file = File.new(tmp_path, 'w+')
+    tmp_file.binmode
+    tmp_file.write(self.json_data.read)
+    tmp_file.fsync
+    tmp_file.close
+    transfer = TransFile.new(tmp_path)
+    transfer.send("to_#{file_type}")
+  end
+
   private
 
   def self.build_attribute(transfer)
     {
         title: transfer.title,
         extname: transfer.extname,
-        data: transfer.data,
         json_data: transfer.json_data
     }
   end

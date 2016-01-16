@@ -24,12 +24,7 @@ class TransFile
 
     SUPPORTED_TYPE.each do |key, value|
       TransFile.send(:define_method, "to_#{key}") do
-        driver = Gdal::Ogr.get_driver_by_name(value)
-        tmp_path = TMP_PATH + self.title + ".#{key}"
-        File.delete(tmp_path) if File.exist?(tmp_path)
-        tmp_source = driver.copy_data_source(@data, tmp_path)
-        tmp_source.sync_to_disk
-        tmp_path
+        sync_trans(key, value)
       end
     end
   end
@@ -47,11 +42,24 @@ class TransFile
   end
 
   def json_data
-    File.open(self.to_json)
+    path = self.to_json
+    File.open(path, File::SYNC)
   end
 
   def valid?
     !@data.nil?
+  end
+
+  def sync_trans(key, value)
+    tmp_path = TMP_PATH + self.title + ".#{key}"
+    fork do
+      driver = Gdal::Ogr.get_driver_by_name(value)
+      File.delete(tmp_path) if File.exist?(tmp_path)
+      driver.copy_data_source(@data, tmp_path)
+    end
+    pid = Process.wait
+    puts "transport process terminated, pid = #{pid}, status = #{$?.exitstatus}"
+    tmp_path
   end
 
 
@@ -67,4 +75,3 @@ class TransFile
     Gdal::Ogr.get_driver_count
   end
 end
-
