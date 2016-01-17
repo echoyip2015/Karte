@@ -1,9 +1,7 @@
 #-*- coding: utf-8 -*-
-
 require 'gdal-ruby/ogr'
 
 class TransFile
-
 
   class UnSupportedFile < Exception
   end
