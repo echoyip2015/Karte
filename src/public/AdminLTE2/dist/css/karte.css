@@ -30,7 +30,7 @@ div .map-editor-container {
     bottom: 0;
     z-index: 2001;
     width: 722px;
-    border: 1px solid #fb6a6a;
+    border: 1px solid #1392e9;
     background-color: #fff;
     user-select: none;
 }
@@ -42,7 +42,7 @@ div .map-editor-container {
     left: 0;
     bottom: 0;
     list-style: none;
-    background-color: #fc8383;
+    background-color: #1392e9;
     color: #fff;
     margin: 0;
     padding: 0;
@@ -57,11 +57,11 @@ div .map-editor-container {
 }
 
 .main-menu .tab-head li:hover {
-    background-color: #fb6a6a;
+    background-color: #1087dd;
 }
 
 .main-menu .tab-head li.active {
-    background-color: #fdb4b4;
+    background-color: #63ABF7;
 }
 
 .main-menu .tab-head li a {
@@ -126,7 +126,7 @@ div .map-editor-container {
 }
 
 .main-menu .tab-body .tab-pane .template-list .template-item:hover:before {
-    border: 1px solid #fc8383;
+    border: 1px solid #1392e9;
 }
 
 *, :after, :before {
@@ -184,7 +184,7 @@ div .map-editor-container {
 }
 
 .main-menu .tab-body .tab-pane .template-list .template-item:hover span {
-    color: #fc8383;
+    color: #1392e9;
 }
 
 .main-menu .tab-body .tab-pane .template-list .template-item span {
@@ -250,9 +250,9 @@ div .map-editor-container {
     top: 9px;
     vertical-align: middle;
     font-size: 24px;
-    border: 1px solid #fdb4b4;
+    border: 1px solid #63ABF7;
     padding: 5px;
-    color: #fc8383;
+    color: #1392e9;
 }
 
 .main-menu .tab-body .tab-pane .import-file {
