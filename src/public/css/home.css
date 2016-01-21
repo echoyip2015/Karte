@@ -1,0 +1,24 @@
+.content-wrapper {
+    background-color: white;
+    padding: 0 15px;
+}
+
+
+.skin-blue-light .sidebar-menu>li:hover>a, .skin-blue-light .sidebar-menu>li.active>a {
+    color: #000;
+    background: #f4f4f5;
+    border-left-color: #3c8dbc;
+}
+
+.toolbar {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.file-table {
+
+}
+
+table td {
+    vertical-align: middle !important;
+}

@@ -7,7 +7,7 @@ class Map
 
   field :extname, type: String
 
-  mount_uploader :json_data, MapUploader
+  mount_uploader :data, MapUploader
 
   field :create_time, type: DateTime, default: -> { DateTime.now }
 

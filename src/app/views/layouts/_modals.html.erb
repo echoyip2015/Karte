@@ -5,19 +5,20 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">打开文件</h4>
       </div>
+      <form id="mapUploader" action="/karte/upload" method="post" enctype="multipart/form-data">
       <div class="modal-body">
-        <form action="" class="ng-pristine ng-valid">
+
           <div class="form-group">
             <label for="uploadFile">选择本地文件</label>
-            <input type="file" id="uploadFile" accept=".km,.txt,.md,.mm,.xmind,.mmap" onchange="angular.element(this).scope().readFile(this.files[0])">
+            <input type="file" id="uploadFile" accept=".dxf,.json,.kml" name="file">
             <p class="help-block ng-binding">支持的格式：ShapeFile 格式(.shp), GeoJson 格式(.json), KML 格式(.kml), AutoCad DXF 格式(.dxf)</p>
           </div>
-        </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <input type="submit" class="btn btn-primary">
       </div>
+      </form>
     </div>
   </div>
 </div>
