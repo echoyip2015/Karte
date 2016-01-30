@@ -8,91 +8,11 @@
   <link rel="stylesheet" href="/AdminLTE2/dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="/AdminLTE2/ol3/ol.css">
   <link rel="stylesheet" href="/AdminLTE2/dist/css/karte.css">
-
+  <script src="/js/common.js"></script>
+  <script src="/js/header.js"></script>
   <%= csrf_meta_tags %>
 </head>
 <body class="skin-red-light">
-<header class="main-header">
-  <a href="/" class="logo">
-    Karte
-  </a>
-  <!-- Header Navbar: style can be found in header.less -->
-  <nav class="navbar navbar-static-top" role="navigation">
-    <a href="#" class="sidebar-toggle" onclick="openMenu()">
-      <span class="sr-only">Toggle navigation</span>
-    </a>
-
-    <div class="navbar-collapse pull-left collapse">
-      <ul class="nav navbar-nav">
-        <li><span>准备就绪</span></li>
-      </ul>
-    </div>
-
-    <!-- Navbar Right Menu -->
-    <div class="navbar-custom-menu">
-      <ul class="nav navbar-nav">
-        <!-- User Account: style can be found in dropdown.less -->
-        <li>
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            welcome! , <%= @u.try('nickname') || 'visitor' %>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-
-  <div class="main-menu" tabindex="-1">
-    <ul class="tab-head">
-      <li class="close-menu" onclick="closeMenu()"><i class="fa fa-chevron-left"></i></li>
-      <li class="main-menu-tool active" > <a href="#tool-new" data-toggle="tab"><span>新建</span></a></li>
-      <li class="main-menu-tool" > <a href="#tool-open" data-toggle="tab"><span>打开</span></a></li>
-      <li class="main-menu-tool" > <a href="#tool-export" data-toggle="tab"><span>另存为</span></a></li>
-    </ul>
-    <div class="tab-body tab-content">
-      <div class="tab-pane active" id="tool-new">
-        <h2 class="title">新建</h2>
-        <ul class="template-list">
-          <li class="template-item"><span class="ng-binding">空白地图</span></li>
-        </ul>
-      </div>
-      <div class="tab-pane" id="tool-open">
-        <h2 class="title">打开</h2>
-        <h3 class="latest-files-title">最近使用的文件</h3>
-        <ul class="latest-files">
-          <li  class="ng-scope">
-            <span class="icon"><i class="fa fa-file-image-o"></i></span>
-            <span class="filename ng-binding">地形图绘制系统功能设计.km</span>
-            <span class="info ng-binding">5 天前</span></li>
-        </ul>
-        <a class="go-home" href="/home" target="_self" title="到我的文档里查看更多">到我的文档里查看更多..</a>
-        <div class="item import-file" onclick="importFile()">
-          <i class="glyphicon glyphicon-open icon"></i>
-          <span class="item-name">打开本地文件</span>
-          <span class="item-info">上传本地脑图文件，并用脑图编辑</span>
-        </div>
-      </div>
-      <div class="tab-pane" id="tool-export">
-        <h2 class="title">另存为</h2>
-        <ul class="items">
-          <li class="item">
-            <i class="glyphicon glyphicon-duplicate icon"></i>
-            <span class="item-name">另存为</span>
-            <span class="item-info">保存副本到我的文档</span>
-          </li>
-          <li class="item">
-            <i class="glyphicon glyphicon-edit icon"></i>
-            <span class="item-name">重命名</span>
-            <span class="item-info">重命名此文件</span>
-          </li>
-          <li class="item">
-            <i class="glyphicon glyphicon-save icon"></i>
-            <span class="item-name">导出</span>
-            <span class="item-info">将文件导出到本地（不包含第三方格式，.km 文件除外）</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</header>
 <div class="content-wrapper">
   <%= yield %>
 </div>

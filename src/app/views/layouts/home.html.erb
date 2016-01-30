@@ -7,31 +7,22 @@
   <link rel="stylesheet" href="/AdminLTE2/plugins/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="/AdminLTE2/dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="/css/home.css">
+  <script src="/js/common.js"></script>
   <%= csrf_meta_tags %>
 </head>
 <body class="skin-blue-light">
-<header class="main-header">
-  <a href="/" class="logo">
-    Karte
-  </a>
-  <!-- Header Navbar: style can be found in header.less -->
-  <nav class="navbar navbar-static-top" role="navigation">
+<div id="header">
 
-    <!-- Navbar Right Menu -->
-    <div class="navbar-custom-menu">
-      <ul class="nav navbar-nav">
-        <!-- User Account: style can be found in dropdown.less -->
-        <li>
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            welcome! , <%= @u.try('nickname') || 'visitor' %>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-</header>
+</div>
+
 <div class="content-wrapper">
+  <div id="sidebar"></div>
   <%= yield %>
 </div>
+<script src="/js/header.js"></script>
+<script src="/AdminLTE2/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script src="/AdminLTE2/bootstrap/js/bootstrap.min.js"></script>
+<script src="/AdminLTE2/dist/js/app.min.js"></script>
+<%= yield :react %>
 </body>
 </html>

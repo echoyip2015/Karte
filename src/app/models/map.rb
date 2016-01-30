@@ -7,14 +7,20 @@ class Map
 
   field :extname, type: String
 
+  field :center, type: Array
+
+  field :extent, type: Array
+
   mount_uploader :data, MapUploader
+
+  field :size, type:Float
 
   field :create_time, type: DateTime, default: -> { DateTime.now }
 
   field :modify_time, type: DateTime, default: -> { DateTime.now }
 
   def self.import(file_path)
-    transfer = TransFile.new(file_path)
+    transfer = MapLoader.new(file_path)
     instance = self.new
     return false unless transfer.valid?
     instance.attributes = build_attribute(transfer)
@@ -28,7 +34,7 @@ class Map
     tmp_file.write(self.json_data.read)
     tmp_file.fsync
     tmp_file.close
-    transfer = TransFile.new(tmp_path)
+    transfer = MapLoader.new(tmp_path)
     transfer.send("to_#{file_type}")
   end
 
@@ -38,7 +44,10 @@ class Map
     {
         title: transfer.title,
         extname: transfer.extname,
-        json_data: transfer.json_data
+        data: transfer.kml_data,
+        center: transfer.center,
+        extent: extent,
+        size: transfer.data.stat.size
     }
   end
 

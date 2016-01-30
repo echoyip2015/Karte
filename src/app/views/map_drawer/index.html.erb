@@ -8,33 +8,3 @@
 <%= render :partial => 'layouts/modals' %>
 
 <%= render :partial => 'layouts/scripts' %>
-
-<script type="text/javascript">
-    var map = new ol.Map({
-        target: 'map-editor',
-        controls: ol.control.defaults({
-            attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
-                collapsible: false
-            })
-        }),
-        view: new ol.View({
-            center: [0,0],
-            projection: 'EPSG:3857',
-            zoom: 4
-        })
-    });
-    var vectorSource = new ol.source.Vector({
-        url: '/map_drawer/map?id=<%=@id%>',
-        format: new ol.format.KML(),
-        wrapX: false
-    });
-    var vectorLayer = new ol.layer.Vector({
-        source: vectorSource,
-
-    });
-    map.addLayer(vectorLayer);
-    map.addControl(new ol.control.ScaleLine());
-    map.addControl(new ol.control.MousePosition());
-    map.render();
-    console.log(map.getLayers());
-</script>

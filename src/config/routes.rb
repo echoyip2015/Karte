@@ -1,7 +1,18 @@
 Rails.application.routes.draw do
-  get 'map_drawer/index' => 'map_drawer#index'
 
-  root 'map_drawer#index'
+  get '/home' => 'home#home'
+
+  get 'file/:id' => 'map_drawer#index'
+
+  get 'file' => 'map_drawer#index'
+
+  get 'map_drawer/map' => 'map_drawer#map'
+
+  get 'files' => 'home#files'
+
+  post 'karte/upload' => 'main_menu#import_file'
+
+  root 'home#home'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

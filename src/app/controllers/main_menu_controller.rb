@@ -3,10 +3,13 @@ class MainMenuController < ActionController::Base
 
   def import_file
     @map = Map.new
-    transfer = TransFile.new(params[:file].tempfile.path)
+    transfer = MapLoader.new(params[:file].tempfile.path)
     @map.title = params[:file].original_filename
     @map.extname = transfer.extname
+    @map.center = transfer.center
+    @map.extent = transfer.extent
     @map.data = transfer.kml_data
+    @map.size = transfer.data.stat.size
     @map.save
     #todo
     redirect_to root_url
