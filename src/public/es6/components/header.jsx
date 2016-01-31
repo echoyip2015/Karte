@@ -1,14 +1,15 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+import FileUploader from './upload_modal'
 
 export var HomeHeader = class extends React.Component {
+
     render() {
         return <header className="main-header">
             <a href="/" className="logo">
             Karte
             </a>
             <nav className="navbar navbar-static-top" role="navigation">
-                
             <div className="navbar-custom-menu">
                 <ul className="nav navbar-nav">
                     <li>
@@ -18,24 +19,30 @@ export var HomeHeader = class extends React.Component {
                     </li>
                 </ul>
             </div>
+            <MainMenu ref="menu"/>
             </nav>
         </header>
     }
 };
 
 export var DrawerHeader = class extends React.Component {
+
+    openMenu() {
+        $(ReactDOM.findDOMNode(this.refs.menu)).css('left', '0px');
+    }
+
     render() {
         return <header className="main-header">
             <a href="/" className="logo">
                 Karte
             </a>
             <nav className="navbar navbar-static-top" role="navigation">
-                <a href="#" class="sidebar-toggle" onclick="Karte.MainTool.openMenu()">
-                    <span class="sr-only">Toggle navigation</span>
+                <a href="#" className="sidebar-toggle" onClick={this::this.openMenu}>
+                    <span className="sr-only">Toggle navigation</span>
                 </a>
 
-                <div class="navbar-collapse pull-left collapse">
-                    <ul class="nav navbar-nav">
+                <div className="navbar-collapse pull-left collapse">
+                    <ul className="nav navbar-nav">
                         <li><span>准备就绪</span></li>
                     </ul>
                 </div>
@@ -48,6 +55,7 @@ export var DrawerHeader = class extends React.Component {
                         </li>
                     </ul>
                 </div>
+                <MainMenu ref="menu"/>
             </nav>
         </header>
     }
@@ -71,10 +79,19 @@ export var MainSiderBar = class extends React.Component {
 };
 
 export var MainMenu = class extends React.Component {
+
+    close() {
+        $(ReactDOM.findDOMNode(this)).css('left', '-740px');
+    }
+
+    handleUploadFile() {
+        this.refs.fileUploader.open();
+    }
+
     render() {
-        return <div className="main-menu" tabindex="-1">
+        return <div className="main-menu" tabIndex="-1">
             <ul className="tab-head">
-                <li className="close-menu" onclick="Karte.MainTool.closeMenu()"><i className="fa fa-chevron-left"></i></li>
+                <li className="close-menu" onClick={this::this.close}><i className="fa fa-chevron-left"></i></li>
                 <li className="main-menu-tool active" > <a href="#tool-new" data-toggle="tab"><span>新建</span></a></li>
                 <li className="main-menu-tool" > <a href="#tool-open" data-toggle="tab"><span>打开</span></a></li>
                 <li className="main-menu-tool" > <a href="#tool-export" data-toggle="tab"><span>另存为</span></a></li>
@@ -91,12 +108,12 @@ export var MainMenu = class extends React.Component {
                     <h3 className="latest-files-title">最近使用的文件</h3>
                     <ul className="latest-files">
                         <li  className="ng-scope" onclick="Karte.MainTool.openMapFile()">
-                            <span className="icon"><i class="fa fa-file-image-o"></i></span>
+                            <span className="icon"><i className="fa fa-file-image-o"></i></span>
                             <span className="filename ng-binding">地形图绘制系统功能设计.km</span>
                             <span className="info ng-binding">5 天前</span></li>
                     </ul>
                     <a className="go-home" href="/home" target="_self" title="到我的文档里查看更多">到我的文档里查看更多..</a>
-                    <div className="item import-file" onclick="Karte.MainTool.importFile()">
+                    <div className="item import-file" onClick={this::this.handleUploadFile}>
                         <i className="glyphicon glyphicon-open icon"></i>
                         <span className="item-name">打开本地文件</span>
                         <span className="item-info">上传本地地图文件，并编辑</span>
@@ -122,6 +139,7 @@ export var MainMenu = class extends React.Component {
                     </ul>
                 </div>
             </div>
+            <FileUploader ref="fileUploader"/>
         </div>
     }
 };

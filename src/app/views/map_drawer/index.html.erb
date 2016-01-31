@@ -1,9 +1,15 @@
+<div id="content">
 
+</div>
 <div class="map-editor-container">
   <div class="tool-container"></div>
   <div class="map-editor" id="map-editor">
   </div>
 </div>
+
+<% content_for :react do %>
+    <script src="/js/drawer.js"></script>
+<% end %>
 
 <%= render :partial => 'layouts/modals' %>
 

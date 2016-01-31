@@ -122,7 +122,7 @@ div .map-editor-container {
     left: 50%;
     top: 10px;
     margin-left: -50px;
-    background: url(images/template_large.png?_=48145120be6256e9) no-repeat;
+    background: url(../AdminLTE2/dist/css/images/template_large.png?_=48145120be6256e9) no-repeat;
 }
 
 .main-menu .tab-body .tab-pane .template-list .template-item:hover:before {
@@ -177,10 +177,6 @@ div .map-editor-container {
     height: 20px;
     line-height: 20px;
     display: block;
-}
-
-.content-wrapper, .right-side, .main-footer {
-    margin-left: 0;
 }
 
 .main-menu .tab-body .tab-pane .template-list .template-item:hover span {
@@ -358,4 +354,8 @@ table td {
 .ul-responsive {
     max-height: 300px;
     overflow-y: auto;
+}
+
+.content-wrapper, .right-side, .main-footer {
+    margin-left: 0;
 }

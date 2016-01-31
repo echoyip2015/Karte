@@ -1,4 +1,4 @@
-webpackJsonp([2],{
+webpackJsonp([1],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -10,9 +10,7 @@ webpackJsonp([2],{
 	var React = __webpack_require__(404);
 	var ReactDOM = __webpack_require__(405);
 
-	ReactDOM.render(React.createElement(_header.HomeHeader, null), document.getElementById('header'));
-
-	ReactDOM.render(React.createElement(_header.MainSiderBar, null), document.getElementById('sidebar'));
+	ReactDOM.render(React.createElement(_header.DrawerHeader, null), document.getElementById('header'));
 
 /***/ },
 
