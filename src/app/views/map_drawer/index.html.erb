@@ -1,10 +1,7 @@
-<div id="content">
-
+<div class="map-editor" id="map-editor" data-react-props="<%= {:source => "/map_drawer/map?id=#{@id}", :extent => @map.extent, :center => @map.center}.to_json %>">
 </div>
-<div class="map-editor-container">
-  <div class="tool-container"></div>
-  <div class="map-editor" id="map-editor">
-  </div>
+<div id="drawer">
+  <div class="tool-container" id="map-tool"></div>
 </div>
 
 <% content_for :react do %>

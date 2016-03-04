@@ -10,7 +10,11 @@ Rails.application.routes.draw do
 
   get 'files' => 'home#files'
 
+  get 'karte/new_map' => 'main_menu#new_map'
+
   post 'karte/upload' => 'main_menu#import_file'
+
+  post 'karte/load_text_data' => 'main_menu#load_text_file'
 
   root 'home#home'
 

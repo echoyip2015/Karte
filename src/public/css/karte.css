@@ -8,7 +8,7 @@
 
 div .map-editor-container {
     position: absolute;
-    top: 50px;
+    top: 142px;
     bottom: 0;
     left: 0;
     right: 0;
@@ -358,4 +358,27 @@ table td {
 
 .content-wrapper, .right-side, .main-footer {
     margin-left: 0;
+}
+
+.tool-panel {
+    height: 48px;
+    padding: 0px;
+}
+
+.btn-app {
+    padding: 0px;
+}
+
+.btn-tool {
+    height: 48px;
+    margin-right: 2px;
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
+    border-right: 1px dashed #eee;
+    background-color: white;
+}
+
+.btn-tool:hover {
+    background-color: #eff3fa;
 }

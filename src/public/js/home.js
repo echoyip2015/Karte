@@ -5,7 +5,7 @@ webpackJsonp([3],{
 
 	"use strict";
 
-	var _file_table = __webpack_require__(406);
+	var _file_table = __webpack_require__(412);
 
 	var _file_table2 = _interopRequireDefault(_file_table);
 
@@ -30,8 +30,8 @@ webpackJsonp([3],{
 	            "div",
 	            { className: "col-md-12 toolbar" },
 	            React.createElement(
-	                "button",
-	                { type: "button", className: "btn btn-primary" },
+	                "a",
+	                { href: "/karte/new_map", className: "btn btn-primary" },
 	                React.createElement("span", { className: "glyphicon glyphicon-plus" }),
 	                " 新建地图"
 	            )
@@ -46,7 +46,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 406:
+/***/ 412:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

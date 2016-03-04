@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-import FileUploader from './upload_modal'
+import FileUploader from './modals/upload_modal'
 
 export var HomeHeader = class extends React.Component {
 

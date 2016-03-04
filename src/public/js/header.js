@@ -7,8 +7,8 @@ webpackJsonp([2],{
 
 	var _header = __webpack_require__(403);
 
-	var React = __webpack_require__(404);
-	var ReactDOM = __webpack_require__(405);
+	var React = __webpack_require__(410);
+	var ReactDOM = __webpack_require__(411);
 
 	ReactDOM.render(React.createElement(_header.HomeHeader, null), document.getElementById('header'));
 
@@ -28,7 +28,7 @@ webpackJsonp([2],{
 	});
 	exports.MainMenu = exports.MainSiderBar = exports.DrawerHeader = exports.HomeHeader = undefined;
 
-	var _upload_modal = __webpack_require__(407);
+	var _upload_modal = __webpack_require__(404);
 
 	var _upload_modal2 = _interopRequireDefault(_upload_modal);
 
@@ -445,22 +445,6 @@ webpackJsonp([2],{
 /***/ 404:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["React"] = __webpack_require__(1);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-
-/***/ 405:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["ReactDOM"] = __webpack_require__(158);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-
-/***/ 407:
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -569,6 +553,22 @@ webpackJsonp([2],{
 	}(React.Component);
 
 	exports.default = FileUploader;
+
+/***/ },
+
+/***/ 410:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["React"] = __webpack_require__(1);
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+
+/***/ 411:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["ReactDOM"] = __webpack_require__(158);
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }
 
