@@ -2,9 +2,16 @@
   <dictionary name="zhuzhiying">
     <words>
       <w>bson</w>
+      <w>entrys</w>
+      <w>epsg</w>
+      <w>fileloader</w>
       <w>gdal</w>
+      <w>karte</w>
       <w>mongo</w>
       <w>mongoid</w>
+      <w>openlayers</w>
+      <w>proj</w>
+      <w>transpiler</w>
     </words>
   </dictionary>
 </component>

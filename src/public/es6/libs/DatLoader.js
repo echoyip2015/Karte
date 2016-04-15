@@ -11,7 +11,7 @@ export default class DatLoader {
                 continue;
             }
             let feature = new ol.Feature({
-                geometry: new ol.geom.Point([source[i][3], source[i][2]]),
+                geometry: new ol.geom.Point([source[i][2], source[i][3]]),
                 name: source[i][0]
             });
             feature.getGeometry().set('z', source[i][4]);
@@ -30,8 +30,8 @@ export default class DatLoader {
             if (source[i].length < 4) {
                 continue;
             }
-            let x = parseFloat(source[i][3]);
-            let y = parseFloat(source[i][2]);
+            let x = parseFloat(source[i][2]);
+            let y = parseFloat(source[i][3]);
             let z = parseFloat(source[i][4]);
             collection.push([x, y, z]);
         }

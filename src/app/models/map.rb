@@ -7,6 +7,8 @@ class Map
 
   field :extname, type: String
 
+  field :meta, type:Hash
+
   field :center, type: Array
 
   field :extent, type: Array
@@ -45,6 +47,7 @@ class Map
         title: transfer.title,
         extname: transfer.extname,
         data: transfer.kml_data,
+        meta: {:center => transfer.center, :extent => transfer.extent},
         center: transfer.center,
         extent: extent,
         size: transfer.data.stat.size

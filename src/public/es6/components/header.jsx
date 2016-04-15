@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-import FileUploader from './modals/upload_modal'
+import FileUploader from './modals/uploadModal'
 
 export var HomeHeader = class extends React.Component {
 
@@ -100,7 +100,7 @@ export var MainMenu = class extends React.Component {
                 <div className="tab-pane active" id="tool-new">
                     <h2 className="title">新建</h2>
                     <ul className="template-list">
-                        <li className="template-item" onclick="Karte.MainTool.newMapFile()"><span className="ng-binding">空白地图</span></li>
+                        <a href='/karte/new_map'><li className="template-item"><span>空白地图</span></li></a>
                     </ul>
                 </div>
                 <div className="tab-pane" id="tool-open">

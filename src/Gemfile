@@ -49,3 +49,4 @@ gem 'carrierwave'
 gem 'carrierwave-mongoid'
 
 gem 'mongoid-grid_fs'
+

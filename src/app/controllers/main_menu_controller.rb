@@ -7,9 +7,23 @@ class MainMenuController < ActionController::Base
     @map.extname = '.kml'
     @map.center = [0, 0]
     @map.extent = [0, 0, 100, 100]
+    @map.meta = {:center => @map.center, :extent => @map.extent, :proj => 'EPSG:3857'}
     @map.size = 0
     @map.save
     redirect_to root_url
+  end
+
+  def delete_map
+    @map = Map.find_by(:id => params[:id])
+    @map.destroy unless @map.blank?
+    render :json => {:msg => 'ok'}
+  end
+
+  def map_meta
+    @map = Map.find_by(:id => params[:id])
+    @map.meta = {:center => @map.center, :extent => @map.extent, :proj => 'EPSG:3857'} unless @map.meta.blank?
+    @map.save
+    render :json => {:msg => 'ok', :file => @map}
   end
 
   def import_file
@@ -19,6 +33,7 @@ class MainMenuController < ActionController::Base
     @map.extname = transfer.extname
     @map.center = transfer.center
     @map.extent = transfer.extent
+    @map.meta = {:center => @map.center, :extent => @map.extent, :proj => 'EPSG:3857'}
     @map.data = transfer.kml_data
     @map.size = transfer.data.stat.size
     @map.save

@@ -62,6 +62,6 @@ export default class FileLoaderModal extends React.Component {
                     <Button onClick={this::this.read} className="btn btn-primary">确定</Button>
                 </Modal.Footer>
             </form>
-        </Modal>
+        </Modal>;
     }
 }

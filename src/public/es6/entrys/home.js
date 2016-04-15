@@ -1,4 +1,4 @@
-import FileTable from '../components/file_table'
+import FileTable from '../components/fileTable'
 
 ReactDOM.render( <div>
         <section className="content-header">

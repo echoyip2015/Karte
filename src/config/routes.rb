@@ -2,15 +2,19 @@ Rails.application.routes.draw do
 
   get '/home' => 'home#home'
 
+  get 'files' => 'home#files'
+
   get 'file/:id' => 'map_drawer#index'
 
   get 'file' => 'map_drawer#index'
 
   get 'map_drawer/map' => 'map_drawer#map'
 
-  get 'files' => 'home#files'
-
   get 'karte/new_map' => 'main_menu#new_map'
+
+  get 'karte/map_meta' => 'main_menu#map_meta'
+
+  post 'karte/delete_map' => 'main_menu#delete_map'
 
   post 'karte/upload' => 'main_menu#import_file'
 

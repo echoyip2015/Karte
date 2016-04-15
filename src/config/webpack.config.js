@@ -6,7 +6,6 @@ var app_root = path.resolve(__dirname) + '/../public/es6/';
 
 module.exports = {
     entry: {
-        index : path.resolve(app_root + '/karte.js'),
         header: path.resolve(app_root, 'entrys/index.js'),
         home: path.resolve(app_root, 'entrys/home.js'),
         drawer: path.resolve(app_root, 'entrys/drawer.js'),

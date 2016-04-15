@@ -7,8 +7,8 @@ webpackJsonp([2],{
 
 	var _header = __webpack_require__(403);
 
-	var React = __webpack_require__(410);
-	var ReactDOM = __webpack_require__(411);
+	var React = __webpack_require__(420);
+	var ReactDOM = __webpack_require__(421);
 
 	ReactDOM.render(React.createElement(_header.HomeHeader, null), document.getElementById('header'));
 
@@ -21,16 +21,16 @@ webpackJsonp([2],{
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	exports.MainMenu = exports.MainSiderBar = exports.DrawerHeader = exports.HomeHeader = undefined;
 
-	var _upload_modal = __webpack_require__(404);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _upload_modal2 = _interopRequireDefault(_upload_modal);
+	var _uploadModal = __webpack_require__(404);
+
+	var _uploadModal2 = _interopRequireDefault(_uploadModal);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -306,12 +306,16 @@ webpackJsonp([2],{
 	                            'ul',
 	                            { className: 'template-list' },
 	                            React.createElement(
-	                                'li',
-	                                { className: 'template-item', onclick: 'Karte.MainTool.newMapFile()' },
+	                                'a',
+	                                { href: '/karte/new_map' },
 	                                React.createElement(
-	                                    'span',
-	                                    { className: 'ng-binding' },
-	                                    '空白地图'
+	                                    'li',
+	                                    { className: 'template-item' },
+	                                    React.createElement(
+	                                        'span',
+	                                        null,
+	                                        '空白地图'
+	                                    )
 	                                )
 	                            )
 	                        )
@@ -432,7 +436,7 @@ webpackJsonp([2],{
 	                        )
 	                    )
 	                ),
-	                React.createElement(_upload_modal2.default, { ref: 'fileUploader' })
+	                React.createElement(_uploadModal2.default, { ref: 'fileUploader' })
 	            );
 	        }
 	    }]);
@@ -447,11 +451,11 @@ webpackJsonp([2],{
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _reactBootstrap = __webpack_require__(159);
 
@@ -556,7 +560,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 410:
+/***/ 420:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["React"] = __webpack_require__(1);
@@ -564,7 +568,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 411:
+/***/ 421:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["ReactDOM"] = __webpack_require__(158);
