@@ -5,16 +5,15 @@ import MapContainer from '../components/map_container'
 import PropLoader from '../libs/preloader'
 
 var props = PropLoader.getProps('#map-editor');
-var map = React.createElement(MapContainer, props)
 
 ReactDOM.render(
-    <DrawerHeader />,
+    <DrawerHeader {...props}/>,
     document.getElementById('header')
 );
 
 
 
 ReactDOM.render(
-    map,
+    <MapContainer {...props} />,
     document.getElementById('drawer')
 );

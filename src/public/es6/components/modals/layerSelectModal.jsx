@@ -1,4 +1,5 @@
-import {Modal, Button, Table, Label, Input} from 'react-bootstrap'
+import {Button, Table, Label, Input} from 'react-bootstrap'
+import {Modal, message, Radio} from 'antd'
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -21,7 +22,7 @@ export default class LayerModal extends React.Component {
 
     ok() {
         if (this.state.selected == null) {
-            alert('还没有选择任何图层!');
+            message.info('还没有选择任何图层!', 3);
             return;
         }
         this.setState({ showModal: false });
@@ -44,7 +45,7 @@ export default class LayerModal extends React.Component {
                     checked = true;
                 }
                 rows.push(<tr key={index}>
-                    <td> <input type="radio" checked={checked} onClick={this.handleSelect.bind(this, layer)} readOnly></input></td>
+                    <td> <Radio checked={checked} onClick={this.handleSelect.bind(this, layer)} readOnly></Radio></td>
                     <td>{index}</td>
                     <td>{layer.get('name') || 'Undefined'}</td>
                     <td>否</td>
@@ -56,11 +57,7 @@ export default class LayerModal extends React.Component {
 
 
     render() {
-        return <Modal show={this.state.showModal} onHide={this::this.close} bsSize="lg">
-            <Modal.Header closeButton>
-                <Modal.Title>选择需要开始编辑的图层</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
+        return <Modal title="选择需要开始编辑的图层" width={680} visible={this.state.showModal} onCancel={this::this.close} onOk={this::this.ok}>
                 <Table >
                     <thead>
                     <tr><th>选择</th><th>编号</th><th>图层名</th><th>锁定</th></tr>
@@ -69,11 +66,6 @@ export default class LayerModal extends React.Component {
                     {this.renderLayerList()}
                     </tbody>
                 </Table>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button onClick={this::this.close}>Close</Button>
-                <Button onClick={this::this.ok} className="btn btn-primary">确定</Button>
-            </Modal.Footer>
         </Modal>;
     }
 }

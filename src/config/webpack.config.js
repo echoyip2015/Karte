@@ -27,7 +27,7 @@ module.exports = {
                 test: /\.jsx?$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/,
-                query: {presets: ['react', 'es2015', 'stage-0',  'stage-1']}
+                query: {presets: ['react', 'es2015', 'stage-0',  'stage-1'], plugins: ['antd']}
             },
             {
                 test: /masonry|imagesloaded|fizzy\-ui\-utils|desandro\-|outlayer|get\-size|doc\-ready|eventie|eventemitter/,

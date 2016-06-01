@@ -1,6 +1,9 @@
-import {Modal, Button} from 'react-bootstrap'
+import { Button} from 'react-bootstrap'
+import {Modal, Upload, Icon, message} from 'antd'
 var React = require('react');
 var ReactDOM = require('react-dom');
+
+const Dragger = Upload.Dragger;
 
 export default class FileLoaderModal extends React.Component {
 
@@ -9,6 +12,13 @@ export default class FileLoaderModal extends React.Component {
         loading: false,
         data: null,
         callback: null,
+        fileList:[]
+    };
+
+    uploadProps = {
+        name: 'file',
+        showUploadList: true,
+        action: '/karte/load_text_data'
     };
 
     open(callback) {
@@ -19,49 +29,58 @@ export default class FileLoaderModal extends React.Component {
         this.setState({ showModal: false });
     }
 
-    read() {
-        let data = new FormData(this.refs.form);
-        let file = $(this.refs.file)[0];
-        data.append(file.name, file.files[0]);
-        this.setState({loading: true});
-        $.ajax({
-            url: "/karte/load_text_data",
-            type: "POST",
-            data:  data,
-            processData: false,
-            contentType: false,
-            success: (res) => {
-                this.setState({data: res.data, loading: false});
-                if (this.state.callback != null) {
-                    this.state.callback(res.data);
-                }
-                console.log(res);
+    onUploadChange(evt) {
+        let file = evt.file;
+        let fileList = evt.fileList;
+        fileList = fileList.slice(-1);
+        if (file.status == 'done') {
+            if (file.response.data) {
+                this.setState({data: file.response.data});
             }
-        });
-        this.close();
-        return false;
+            else {
+                this.setState({data: null});
+                message.info('上传的文件格式错误!!', 3);
+                fileList = fileList.filter(function(file) {
+                    if (file.response && file.response.msg === 'failed') {
+                        return false;
+                    }
+                    return true;
+                });
+            }
+
+        }
+        else {
+            this.setState({data: null});
+        }
+        this.setState({fileList: fileList});
+    }
+
+    read() {
+        if (this.state.data) {
+            if (this.state.callback != null) {
+                this.state.callback(this.state.data);
+
+            }
+            this.close();
+            return true;
+        }
+        else {
+            message.info('还未读取到离散点文件!', 3);
+            return false;
+        }
     }
 
     render() {
-        return <Modal show={this.state.showModal} onHide={this::this.close}>
-            <Modal.Header closeButton>
-                <Modal.Title>读取文件</Modal.Title>
-            </Modal.Header>
-            <form id="mapUploader" ref="form" encType="multipart/form-data">
-                <Modal.Body>
-                    <div className="modal-body">
-                        <div className="form-group">
-                            <label htmlFor="uploadFile">选择本地文件</label>
-                            <input type="file" ref="file" accept=".txt,.dat" name="file"/>
-                            <p className="help-block">支持的格式：txt , dat</p>
-                        </div>
+        return <Modal title="读取文件" visible={this.state.showModal} onCancel={this::this.close} onOk={this::this.read}>
+                <div className="modal-body">
+                    <div className="form-group" style={{ height: 160}}>
+                        <Dragger {...this.uploadProps} onChange={this::this.onUploadChange} fileList={this.state.fileList}>
+                            <Icon type="plus" />
+                            <p className="ant-upload-text">选择本地文件,或将文件拖拽到此区域上传</p>
+                            <p className="ant-upload-hint">支持的格式：txt , dat</p>
+                        </Dragger>
                     </div>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={this::this.close}>Close</Button>
-                    <Button onClick={this::this.read} className="btn btn-primary">确定</Button>
-                </Modal.Footer>
-            </form>
+                </div>
         </Modal>;
     }
 }

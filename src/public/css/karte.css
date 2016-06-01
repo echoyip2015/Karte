@@ -382,3 +382,8 @@ table td {
 .btn-tool:hover {
     background-color: #eff3fa;
 }
+
+.row {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+}

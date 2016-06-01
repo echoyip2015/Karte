@@ -33,7 +33,7 @@ class Map
     tmp_path = Rails.root.to_s + "/tmp/maps/#{self.title}.json"
     tmp_file = File.new(tmp_path, 'w+')
     tmp_file.binmode
-    tmp_file.write(self.json_data.read)
+    tmp_file.write(self.data.read)
     tmp_file.fsync
     tmp_file.close
     transfer = MapLoader.new(tmp_path)
@@ -46,10 +46,10 @@ class Map
     {
         title: transfer.title,
         extname: transfer.extname,
-        data: transfer.kml_data,
+        data: transfer.json_data,
         meta: {:center => transfer.center, :extent => transfer.extent},
         center: transfer.center,
-        extent: extent,
+        extent: transfer.extent,
         size: transfer.data.stat.size
     }
   end

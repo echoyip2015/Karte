@@ -13,10 +13,11 @@ import CContourLine from './contour/contourline'
 
 class ContourTrance {
 
-    constructor(triangleList, zMin, zMax) {
+    constructor(triangleList, zMin, zMax, step) {
         this.triangleNetWork = triangleList;
         this.dMin = zMin;
         this.dMax = zMax;
+        this.step = step
         this.initial();
     }
 
@@ -152,9 +153,10 @@ class ContourTrance {
     }
 
     contourLineCalc() {
-        for (let i = 0; i <= this.lineNum; i++) {
-            let val = (this.dMax - this.dMin) / this.lineNum * i + this.dMin;
-            this.lineValue.push(val);
+        for (let i = ((this.dMin+1) | 0); i < ((this.dMax) | 0); i++) {
+            if (i % this.step == 0) {
+                this.lineValue.push(i);
+            }
         }
     }
 
@@ -251,9 +253,12 @@ class ContourTrance {
                     while (this.triCheckIndex.size > 0) {
                         let newTriangle = this.searchTriangle(tempEdgeIndex);
                         if (newTriangle == -1) {
-                            //console.log(conLine);
-                            conLine.value = conVal;
+                            let point = conLine.listPoint.slice(-1)[0];
                             conLine.type = 1;
+                            if (point &&  this.isEdgeTriangleOnBand(point.listIdEdge[0])) {
+                                conLine.type = 0;
+                            }
+                            conLine.value = conVal;
                             this.contourLine.push(conLine);
                             conLine = new CContourLine();
                             break;
@@ -266,10 +271,14 @@ class ContourTrance {
                                 conTempPoint.listIdEdge.push(tempEdgeIndex);
                                 conLine.listPoint.push(conTempPoint);
                             }
-
                         }
                         if (this.triCheckIndex.size == 0) {
+                            let point = conLine.listPoint.slice(-1)[0];
+                            console.log(point);
                             conLine.type = 1;
+                            if (point &&  this.isEdgeTriangleOnBand(point.listIdEdge[0])) {
+                                conLine.type = 0;
+                            }
                             conLine.value = conVal;
                             //console.log(conLine);
                             this.contourLine.push(conLine);
@@ -284,6 +293,21 @@ class ContourTrance {
         return this.contourLine;
 
     }
+
+    isEdgeTriangleOnBand(edgeId) {
+        console.log('checking');
+        let edge = this.edgeList[edgeId];
+        for (let t = 0; t < edge.listTri.length; t++) {
+            let tri = this.triTotal[edge.listTri[t]];
+            for (let i = 0; i < tri.edgeIndex.length; i++) {
+                if (this.edgeList[tri.edgeIndex[i]].numRef < 2) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     isContourOnEdge(value, edgeIndex) {
         let edge = this.edgeList[edgeIndex];

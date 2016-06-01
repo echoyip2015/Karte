@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>地形图绘制系统</title>
+  <title>等高线绘制系统</title>
+  <link rel="stylesheet" href="/css/antd.css">
   <link rel="stylesheet" href="/AdminLTE2/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="/AdminLTE2/dist/css/skins/skin-blue-light.min.css">
   <link rel="stylesheet" href="/AdminLTE2/plugins/font-awesome/css/font-awesome.min.css">
@@ -12,17 +13,18 @@
 </head>
 <body class="skin-blue-light">
 <div id="header">
-
 </div>
+<div id="alert"></div>
 
 <div class="content-wrapper">
   <div id="sidebar"></div>
   <%= yield %>
 </div>
-<script src="/js/header.js"></script>
+
 <script src="/AdminLTE2/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script src="/AdminLTE2/bootstrap/js/bootstrap.min.js"></script>
 <script src="/AdminLTE2/dist/js/app.min.js"></script>
+<script src="/js/header.js"></script>
 <%= yield :react %>
 </body>
 </html>

@@ -301,3 +301,9 @@ div .map-editor-container {
 table td {
     vertical-align: middle !important;
 }
+
+.row {
+     margin-right: 0px !important;
+     margin-left: 0px !important;
+}
+

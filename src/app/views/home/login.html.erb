@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>等高线绘制系统</title>
+  <link rel="stylesheet" href="/AdminLTE2/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/AdminLTE2/dist/css/skins/skin-red-light.min.css">
+  <link rel="stylesheet" href="/AdminLTE2/plugins/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/AdminLTE2/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div id="particles-js">
+  <div class="login-box">
+    <div class="login-logo" >
+      <a href="/"  ><b>Karte</b> 等高线绘制系统</a>
+    </div>
+    <!-- /.login-logo -->
+
+      <p class="login-box-msg">输入账号进入系统</p>
+
+
+        <%=form_tag '/karte/login' do %>
+        <div class="form-group has-feedback">
+          <input type="text" name="user" class="form-control" placeholder="用户名">
+          <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <input type="password" name="password" class="form-control" placeholder="密码">
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="row">
+          <!-- /.col -->
+          <div class="col-xs-12">
+            <button type="submit" class="btn btn-github btn-block btn-flat">登录</button>
+          </div>
+          <!-- /.col -->
+        </div>
+        <%end%>
+    <% if flash[:notice]%>
+        <div class="alert alert-danger alert-dismissible" style="margin: 20px auto 5px auto">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+          <ul class="list-unstyled">
+            <li style="font-size: 1.1em"><%= flash[:notice]%> </li>
+          </ul>
+        </div>
+    <%end %>
+
+    <!-- /.login-box-body -->
+  </div>
+</div>
+<script src="/AdminLTE2/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script src="/AdminLTE2/bootstrap/js/bootstrap.min.js"></script>
+<script src="/AdminLTE2/dist/js/app.min.js"></script>
+<script src="/js/index.js"></script>
+
+</body>
+</html>

@@ -1,4 +1,5 @@
-import {Modal, Button, Table, Label} from 'react-bootstrap'
+import {Button, Table, Label} from 'react-bootstrap'
+import {Modal} from 'antd';
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -22,14 +23,22 @@ export default class LayerModal extends React.Component {
         this.setState({ showModal: false });
     }
 
+    handleEdit(contour) {
+        let map = this.props.map.refs.map
+        let feature = contour.feature;
+        map.selectedFeatures.clear();
+        map.selectedFeatures.push(feature);
+        this.close();
+    }
+
     renderContourInfo() {
         console.log(this.props.contours);
         if (this.props.contours != null) {
             let rows = this.props.contours.map((contour, index) =>
                     <tr key={index}>
-                    <td>{contour.value}</td>
+                    <td>{contour.value} m</td>
                     <td>{contour.type == 1 ? '闭合' : '开放'}</td>
-                    <td>{contour.listPoint.length}</td>
+                    <td><a href="javascript:(0)" onClick={this.handleEdit.bind(this, contour)} style={{color: '#2db7f5', fontSize: 12}}>编辑</a></td>
                 </tr>
             )
             return rows;
@@ -38,24 +47,17 @@ export default class LayerModal extends React.Component {
 
 
     render() {
-        return <Modal show={this.state.showModal} onHide={this::this.close} bsSize="lg">
-            <Modal.Header closeButton>
-                <Modal.Title>等高线信息</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
+        return <Modal title="等高线信息" visible={this.state.showModal} onCancel={this::this.close} width={800}>
+            <div className="modal-body" style={{maxHeight: 360}}>
                 <Table >
                     <thead>
-                    <tr><th>高程值</th><th>类型</th><th>点数</th></tr>
+                    <tr><th>高程值</th><th>类型</th><th>操作</th></tr>
                     </thead>
                     <tbody>
                     {this.renderContourInfo()}
                     </tbody>
                 </Table>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button onClick={this::this.close}>Close</Button>
-                <Button onClick={this::this.updateLayers} className="btn btn-primary">确定</Button>
-            </Modal.Footer>
+            </div>
         </Modal>;
     }
 }

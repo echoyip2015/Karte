@@ -19,8 +19,11 @@ class MapLoader
   def initialize(source)
     @source = source
     @driver = Gdal::Ogr.get_driver_by_name(auto_detect_type)
-    @data = @driver.open(@source)
-
+    begin
+      @data = @driver.open(@source)
+    rescue Exception => e
+      puts 'file load failed!' + e.message
+    end
     SUPPORTED_TYPE.each do |key, value|
       MapLoader.send(:define_method, "to_#{key}") do
         sync_trans(key, value)
@@ -37,7 +40,12 @@ class MapLoader
   end
 
   def proj
-    layer = @data.get_layer(0)
+    layer_count = @data.get_layer_count
+    begin
+      spatial_ref = @data.get_layer(0).get_spatial_ref().export_to_proj4()
+    rescue Exception => e
+      'unknown'
+    end
   end
 
   def data
@@ -56,8 +64,8 @@ class MapLoader
     [extent[0], extent[2], extent[1], extent[3]]
   end
 
-  def kml_data
-    path = self.to_kml
+  def json_data
+    path = self.to_json
     File.open(path, File::SYNC)
   end
 
@@ -66,15 +74,35 @@ class MapLoader
   end
 
   def sync_trans(key, value)
-    tmp_path = TMP_PATH + self.title + ".#{key}"
-    fork do
-      driver = Gdal::Ogr.get_driver_by_name(value)
-      File.delete(tmp_path) if File.exist?(tmp_path)
-      driver.copy_data_source(@data, tmp_path)
+    if @data.blank?
+      return false
     end
+    tmp_path = TMP_PATH + self.title + ".#{key}"
+    puts 'trans start'
+    fork do
+      system("rm -r #{TMP_PATH}/*")
+      if key == :shp
+        tmp_dir = "#{TMP_PATH}#{self.title}_shp"
+        system("mkdir #{tmp_dir}")
+        system("ogr2ogr -f '#{SUPPORTED_TYPE[key]}' #{tmp_dir} #{@source} -skipfailures -overwrite")
+
+        system("tar -C #{TMP_PATH} -cf #{TMP_PATH}#{self.title}.tar #{self.title}_shp")
+        puts "tar -C #{TMP_PATH} -cf #{TMP_PATH}#{self.title}.tar #{self.title}_shp"
+      else
+        system("ogr2ogr -f '#{SUPPORTED_TYPE[key]}' #{tmp_path} #{@source} -skipfailures -overwrite")
+      end
+    end
+
     pid = Process.wait
     puts "transport process terminated, pid = #{pid}, status = #{$?.exitstatus}"
-    tmp_path
+    puts 'trans end'
+    if key == :shp
+      tmp_path = "#{TMP_PATH}#{self.title}.tar"
+    end
+    if File.exist?(tmp_path)
+      return tmp_path
+    end
+    return false
   end
 
 

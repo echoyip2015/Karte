@@ -1,5 +1,8 @@
 import {DropdownButton, Button , MenuItem, Table} from 'react-bootstrap'
+import {Modal} from 'antd'
 import FileMetaModal from './modals/metaEditor'
+import FileRenamer from './modals/renameModal'
+import FileExporter from './modals/exportModal'
 
 
 export default class FileTable extends React.Component {
@@ -14,11 +17,19 @@ export default class FileTable extends React.Component {
 
     deleteFile(e) {
         let id  = e.currentTarget.id;
-        $.post('/karte/delete_map', {id: id}, result => {
-            if (result.msg == 'ok') {
-                this.getFiles();
+        Modal.confirm({
+            title: '确认删除该地图?',
+            content: '点击确定继续操作',
+            onOk: () => {
+                $.post('/karte/delete_map', {id: id}, result => {
+                    if (result.msg == 'ok') {
+                        this.getFiles();
+                    }
+                })
             }
-        })
+        });
+
+
     }
 
     editFileMeta(e) {
@@ -32,6 +43,18 @@ export default class FileTable extends React.Component {
                 console.log(result);
             }
         })
+    }
+
+    renameFile(id, title) {
+        this.refs.fileRenamer.setState({id: id, title: title});
+        this.refs.fileRenamer.open(()=>{
+            this.getFiles();
+        });
+    }
+
+    exportFile(id, title) {
+        this.refs.fileExporter.setState({id: id, title: title});
+        this.refs.fileExporter.open();
     }
 
     getFiles() {
@@ -49,6 +72,8 @@ export default class FileTable extends React.Component {
                                         操作 <span className="caret"></span>
                                     </a>
                                     <ul className="dropdown-menu">
+                                        <li id={file._id.$oid} onClick={this.renameFile.bind(this, file._id.$oid, file.title)}><a href='javascript:void(0);' >重命名</a></li>
+                                        <li id={file._id.$oid} onClick={this.exportFile.bind(this, file._id.$oid, file.title)}><a href='javascript:void(0);' >导出文件</a></li>
                                         <li id={file._id.$oid} onClick={this::this.editFileMeta}><a href='javascript:void(0);' >地图元信息编辑</a></li>
                                         <li id={file._id.$oid} onClick={this::this.deleteFile}><a href='javascript:void(0);'>删除</a></li>
                                     </ul>
@@ -74,6 +99,8 @@ export default class FileTable extends React.Component {
                 </tbody>
             </Table>
             <FileMetaModal ref="meta"/>
+            <FileRenamer ref="fileRenamer" fileId={this.state.fileId} fileTitle={this.state.fileTitle} />
+            <FileExporter ref="fileExporter" fileId={this.state.fileId} fileTitle={this.state.fileTitle} />
         </div>;
     }
 }

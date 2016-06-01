@@ -12,10 +12,13 @@ class MapDrawerController < ApplicationController
     (render :text => '/home' if params[:id].nil?) and return
     @map = Map.find_by(:id => params[:id])
     if @map.data.blank?
-      @data = {}
+      @data = {:type => 'FeatureCollection', :features => []}.to_json
     else
       @data = @map.data.read
     end
-    send_data @data
+    @data = ActiveSupport::JSON.decode(@data)
+    @data.delete('crs')
+    @data.delete('srs')
+    render :json => @data
   end
 end

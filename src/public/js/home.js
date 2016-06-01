@@ -5,7 +5,7 @@ webpackJsonp([3],{
 
 	"use strict";
 
-	var _fileTable = __webpack_require__(422);
+	var _fileTable = __webpack_require__(562);
 
 	var _fileTable2 = _interopRequireDefault(_fileTable);
 
@@ -46,7 +46,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 422:
+/***/ 562:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55,13 +55,25 @@ webpackJsonp([3],{
 	    value: true
 	});
 
+	var _modal = __webpack_require__(405);
+
+	var _modal2 = _interopRequireDefault(_modal);
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _reactBootstrap = __webpack_require__(159);
 
-	var _metaEditor = __webpack_require__(423);
+	var _metaEditor = __webpack_require__(563);
 
 	var _metaEditor2 = _interopRequireDefault(_metaEditor);
+
+	var _renameModal = __webpack_require__(467);
+
+	var _renameModal2 = _interopRequireDefault(_renameModal);
+
+	var _exportModal = __webpack_require__(471);
+
+	var _exportModal2 = _interopRequireDefault(_exportModal);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -109,9 +121,15 @@ webpackJsonp([3],{
 	            var _this2 = this;
 
 	            var id = e.currentTarget.id;
-	            $.post('/karte/delete_map', { id: id }, function (result) {
-	                if (result.msg == 'ok') {
-	                    _this2.getFiles();
+	            _modal2.default.confirm({
+	                title: '确认删除该地图?',
+	                content: '点击确定继续操作',
+	                onOk: function onOk() {
+	                    $.post('/karte/delete_map', { id: id }, function (result) {
+	                        if (result.msg == 'ok') {
+	                            _this2.getFiles();
+	                        }
+	                    });
 	                }
 	            });
 	        }
@@ -131,9 +149,25 @@ webpackJsonp([3],{
 	            });
 	        }
 	    }, {
+	        key: 'renameFile',
+	        value: function renameFile(id, title) {
+	            var _this4 = this;
+
+	            this.refs.fileRenamer.setState({ id: id, title: title });
+	            this.refs.fileRenamer.open(function () {
+	                _this4.getFiles();
+	            });
+	        }
+	    }, {
+	        key: 'exportFile',
+	        value: function exportFile(id, title) {
+	            this.refs.fileExporter.setState({ id: id, title: title });
+	            this.refs.fileExporter.open();
+	        }
+	    }, {
 	        key: 'getFiles',
 	        value: function getFiles() {
-	            var _this4 = this;
+	            var _this5 = this;
 
 	            $.get('/files', function (result) {
 	                var list = null;
@@ -189,7 +223,25 @@ webpackJsonp([3],{
 	                                            { className: 'dropdown-menu' },
 	                                            React.createElement(
 	                                                'li',
-	                                                { id: file._id.$oid, onClick: _this4.editFileMeta.bind(_this4) },
+	                                                { id: file._id.$oid, onClick: _this5.renameFile.bind(_this5, file._id.$oid, file.title) },
+	                                                React.createElement(
+	                                                    'a',
+	                                                    { href: 'javascript:void(0);' },
+	                                                    '重命名'
+	                                                )
+	                                            ),
+	                                            React.createElement(
+	                                                'li',
+	                                                { id: file._id.$oid, onClick: _this5.exportFile.bind(_this5, file._id.$oid, file.title) },
+	                                                React.createElement(
+	                                                    'a',
+	                                                    { href: 'javascript:void(0);' },
+	                                                    '导出文件'
+	                                                )
+	                                            ),
+	                                            React.createElement(
+	                                                'li',
+	                                                { id: file._id.$oid, onClick: _this5.editFileMeta.bind(_this5) },
 	                                                React.createElement(
 	                                                    'a',
 	                                                    { href: 'javascript:void(0);' },
@@ -198,7 +250,7 @@ webpackJsonp([3],{
 	                                            ),
 	                                            React.createElement(
 	                                                'li',
-	                                                { id: file._id.$oid, onClick: _this4.deleteFile.bind(_this4) },
+	                                                { id: file._id.$oid, onClick: _this5.deleteFile.bind(_this5) },
 	                                                React.createElement(
 	                                                    'a',
 	                                                    { href: 'javascript:void(0);' },
@@ -222,7 +274,7 @@ webpackJsonp([3],{
 	                        )
 	                    );
 	                }
-	                _this4.setState({ files: list });
+	                _this5.setState({ files: list });
 	            });
 	        }
 	    }, {
@@ -273,7 +325,9 @@ webpackJsonp([3],{
 	                        this.state.files
 	                    )
 	                ),
-	                React.createElement(_metaEditor2.default, { ref: 'meta' })
+	                React.createElement(_metaEditor2.default, { ref: 'meta' }),
+	                React.createElement(_renameModal2.default, { ref: 'fileRenamer', fileId: this.state.fileId, fileTitle: this.state.fileTitle }),
+	                React.createElement(_exportModal2.default, { ref: 'fileExporter', fileId: this.state.fileId, fileTitle: this.state.fileTitle })
 	            );
 	        }
 	    }]);
@@ -285,7 +339,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 423:
+/***/ 563:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -294,9 +348,19 @@ webpackJsonp([3],{
 	    value: true
 	});
 
+	var _modal = __webpack_require__(405);
+
+	var _modal2 = _interopRequireDefault(_modal);
+
+	var _button = __webpack_require__(446);
+
+	var _button2 = _interopRequireDefault(_button);
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _reactBootstrap = __webpack_require__(159);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -340,7 +404,6 @@ webpackJsonp([3],{
 	    }, {
 	        key: 'proj',
 	        value: function proj() {
-	            console.log(this.state.file);
 	            if (this.state.file == null) {
 	                return '未知';
 	            } else {
@@ -350,7 +413,6 @@ webpackJsonp([3],{
 	    }, {
 	        key: 'extent',
 	        value: function extent() {
-	            console.log(this.state.file);
 	            if (this.state.file == null) {
 	                return React.createElement('div', null); //an empty div
 	            } else {
@@ -382,38 +444,21 @@ webpackJsonp([3],{
 	        key: 'render',
 	        value: function render() {
 	            return React.createElement(
-	                _reactBootstrap.Modal,
-	                { show: this.state.showModal, onHide: this.close.bind(this) },
+	                _modal2.default,
+	                { title: '空间元信息', visible: this.state.showModal, onCancel: this.close.bind(this),
+	                    footer: React.createElement(
+	                        _button2.default,
+	                        { type: 'primary', onClick: this.close.bind(this) },
+	                        '确定'
+	                    ) },
 	                React.createElement(
-	                    _reactBootstrap.Modal.Header,
-	                    { closeButton: true },
+	                    'form',
+	                    { className: 'form-horizontal' },
+	                    React.createElement(_reactBootstrap.FormControls.Static, { label: '坐标投影', labelClassName: 'col-xs-3', wrapperClassName: 'col-xs-9', value: this.proj() }),
 	                    React.createElement(
-	                        _reactBootstrap.Modal.Title,
-	                        null,
-	                        '空间元信息'
-	                    )
-	                ),
-	                React.createElement(
-	                    _reactBootstrap.Modal.Body,
-	                    null,
-	                    React.createElement(
-	                        'form',
-	                        { className: 'form-horizontal' },
-	                        React.createElement(_reactBootstrap.FormControls.Static, { label: '坐标投影', labelClassName: 'col-xs-3', wrapperClassName: 'col-xs-9', value: this.proj() }),
-	                        React.createElement(
-	                            _reactBootstrap.FormControls.Static,
-	                            { label: '坐标范围', labelClassName: 'col-xs-3', wrapperClassName: 'col-xs-9' },
-	                            this.extent()
-	                        )
-	                    )
-	                ),
-	                React.createElement(
-	                    _reactBootstrap.Modal.Footer,
-	                    null,
-	                    React.createElement(
-	                        _reactBootstrap.Button,
-	                        { onClick: this.close.bind(this) },
-	                        'Close'
+	                        _reactBootstrap.FormControls.Static,
+	                        { label: '坐标范围', labelClassName: 'col-xs-3', wrapperClassName: 'col-xs-9' },
+	                        this.extent()
 	                    )
 	                )
 	            );

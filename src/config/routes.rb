@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get 'file/:id' => 'map_drawer#index'
 
+  get 'download/:fid' => 'main_menu#download'
+
   get 'file' => 'map_drawer#index'
 
   get 'map_drawer/map' => 'map_drawer#map'
@@ -13,6 +15,18 @@ Rails.application.routes.draw do
   get 'karte/new_map' => 'main_menu#new_map'
 
   get 'karte/map_meta' => 'main_menu#map_meta'
+
+  get 'karte/recent_files' => 'main_menu#recent_files'
+
+  get 'karte/export_file' => 'main_menu#export_file'
+
+  get 'karte/logout' => 'home#logout'
+
+  post 'karte/login' => 'home#login'
+
+  post 'karte/auto_save' => 'main_menu#auto_save'
+
+  post 'karte/rename_file' => 'main_menu#rename_file'
 
   post 'karte/delete_map' => 'main_menu#delete_map'
 

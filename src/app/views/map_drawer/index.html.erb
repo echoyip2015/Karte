@@ -1,4 +1,5 @@
-<div class="map-editor" id="map-editor" data-react-props="<%= {:source => "/map_drawer/map?id=#{@id}", :extent => @map.extent, :center => @map.center}.to_json %>">
+<div class="map-editor" id="map-editor" data-react-props="<%= {:source => "/map_drawer/map?id=#{@id}", :extent => @map.extent, :center => @map.center, :id => @map.id,
+                                                              :title => @map.title, :extname => @map.extname, :meta => @map.meta}.to_json %>">
 </div>
 <div id="drawer">
   <div class="tool-container" id="map-tool"></div>
@@ -7,7 +8,5 @@
 <% content_for :react do %>
     <script src="/js/drawer.js"></script>
 <% end %>
-
-<%= render :partial => 'layouts/modals' %>
 
 <%= render :partial => 'layouts/scripts' %>
