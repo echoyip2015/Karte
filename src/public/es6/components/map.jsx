@@ -1,12 +1,12 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-import {message} from 'antd'
+import {message, Spin} from 'antd'
 import defaultStyle from '../styles/default'
 import MapHistory from '../libs/MapHistory'
 
 export default class Map extends React.Component {
 
-    state = {map: null};
+    state = {map: null, state: 'loading'};
 
 
     constructor() {
@@ -73,9 +73,6 @@ export default class Map extends React.Component {
             }
         };
         this.int = setInterval(this.history.autoSave.bind(this.history), 30000);
-        window.onbeforeunload = (e) => {
-            this.history.autoSave();
-        }
     }
 
     componentWillUnmount() {
@@ -109,6 +106,11 @@ export default class Map extends React.Component {
             url: this.props.source,
             format: this.format,
             wrapX: false
+        });
+        this.vectorSource.on('change', (evt)=>{
+            let state = evt.target.getState();
+            this.setState({state: state});
+
         });
         this.vectorLayer = new ol.layer.Vector({
             name: 'Default',
@@ -166,7 +168,15 @@ export default class Map extends React.Component {
     }
 
     render() {
-        return <div className="map-editor-container" ref="mapDoc"></div>
+        if (this.state.state == 'loading') {
+            return <div className="map-editor-container" ref="mapDoc">
+                <div style={{position: 'relative', left: '48%', top: 300}}>
+                <Spin />
+                </div>
+            </div>
+        }
+        return <div className="map-editor-container" ref="mapDoc">
+            </div>
     }
 
 
