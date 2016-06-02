@@ -8,7 +8,8 @@ export default class FileUploader extends React.Component {
 
     state = {
         showModal: false,
-        fileList: []
+        fileList: [],
+        state: 'wait'
     };
 
     uploadProps = {
@@ -31,6 +32,7 @@ export default class FileUploader extends React.Component {
         let fileList = evt.fileList;
         fileList = fileList.slice(-1);
         if (file.status == 'done') {
+            this.setState({state: file.status});
             if (file.response.map) {
                 this.load(file.response.map);
             }
@@ -63,7 +65,7 @@ export default class FileUploader extends React.Component {
     }
 
     render() {
-        return <Modal title="打开文件" visible={this.state.showModal} onCancel={this::this.close} footer={<Button type="primary" onClick={this::this.close}>确定</Button>}>
+        return <Modal title="打开文件" visible={this.state.showModal} onCancel={this::this.close} footer={''}>
             <form id="mapUploader" action="/karte/upload" method="post" encType="multipart/form-data">
                 <div className="modal-body">
                     <div className="form-group" style={{ height: 160}}>

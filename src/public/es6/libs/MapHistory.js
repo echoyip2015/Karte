@@ -26,34 +26,6 @@ class MapHistory {
         this.prevStates.clear();
     }
 
-    autoSave() {
-        let hide =  message.info('正在自动保存文件!');
-        let layers = this.map.getLayers();
-        let featureColection = [];
-        layers.forEach((layer)=>{
-            let source = layer.getSource();
-            source.forEachFeature((feature)=>{
-                featureColection.push(feature);
-            });
-        });
-        let json_feature = new ol.format.GeoJSON({
-            defaultDataProjection: 'EPSG:3857'
-        }).writeFeatures(featureColection)
-        $.post('/karte/auto_save', {id: this.id, json_data: json_feature}, (result)=>{
-            if (result.msg =='success') {
-                hide();
-                message.info('自动保存文件成功!');
-            }
-            else {
-                hide();
-                message.info('自动保存文件失败!');
-            }
-        }).error(()=>{
-            hide();
-            message.info('自动保存文件失败!');
-        });
-    }
-
     onDrawEnd(evt) {
         let state = {
             type: evt.type,
@@ -62,7 +34,8 @@ class MapHistory {
         };
         console.log(state);
         this.prevStates.pushBack(state);
-        this.nextStates.clear();
+        this.nextStates.clear()
+        this.map.setState({has_modify: true});
     }
 
     onModifyStart(evt) {
@@ -91,13 +64,14 @@ class MapHistory {
         let features = new ol.Collection();
         evt.features.forEach((feature)=>{
             features.push(feature);
-        })
+        });
         if (this.hasPrevState()) {
             state = this.prevStates.popBack();
             state.type = evt.type;
             state.endfeatures = features;
             this.prevStates.pushBack(state);
             this.nextStates.clear();
+            this.map.setState({has_modify: true});
         }
         else {
             console.log('not find start state');
@@ -118,6 +92,7 @@ class MapHistory {
         if (this.hasPrevState()) {
             const state = this.prevStates.popBack();
             this.nextStates.pushBack(state);
+            this.map.setState({has_modify: true});
             return state;
         }
     }
@@ -126,6 +101,7 @@ class MapHistory {
         if (this.hasNextState()) {
             const state = this.nextStates.popBack();
             this.prevStates.pushBack(state);
+            this.map.setState({has_modify: true});
             return state;
         }
     }

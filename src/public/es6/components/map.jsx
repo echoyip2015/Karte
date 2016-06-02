@@ -6,7 +6,7 @@ import MapHistory from '../libs/MapHistory'
 
 export default class Map extends React.Component {
 
-    state = {map: null, state: 'loading'};
+    state = {map: null, state: 'loading', has_modify: false};
 
 
     constructor() {
@@ -15,6 +15,37 @@ export default class Map extends React.Component {
 
     }
 
+    autoSave() {
+        if (!this.state.has_modify) {
+            return ;
+        }
+        let hide =  message.info('正在自动保存文件!');
+        let layers = this.map.getLayers();
+        let featureColection = [];
+        layers.forEach((layer)=>{
+            let source = layer.getSource();
+            source.forEachFeature((feature)=>{
+                featureColection.push(feature);
+            });
+        });
+        let json_feature = new ol.format.GeoJSON({
+            defaultDataProjection: 'EPSG:3857'
+        }).writeFeatures(featureColection);
+        $.post('/karte/auto_save', {id:  this.props.id, json_data: json_feature}, (result)=>{
+            if (result.msg =='success') {
+                hide();
+                message.info('自动保存文件成功!');
+                this.setState({has_modify: false});
+            }
+            else {
+                hide();
+                message.info('自动保存文件失败!');
+            }
+        }).error(()=>{
+            hide();
+            message.info('自动保存文件失败!');
+        });
+    }
 
     registerKeyBoardEvent() {
         document.onkeydown = (e) => {
@@ -72,7 +103,7 @@ export default class Map extends React.Component {
 
             }
         };
-        this.int = setInterval(this.history.autoSave.bind(this.history), 30000);
+        this.int = setInterval(this::this.autoSave, 30000);
     }
 
     componentWillUnmount() {
@@ -139,7 +170,7 @@ export default class Map extends React.Component {
 
         this.map.addInteraction(this.dragBox);
         this.map.addInteraction(this.modify);
-        this.history = new MapHistory(this.map, this.props.id);
+        this.history = new MapHistory(this, this.props.id);
 
         this.dragBox.on('boxend', () => {
             if (this.editLayer == null) {
@@ -170,7 +201,7 @@ export default class Map extends React.Component {
     render() {
         if (this.state.state == 'loading') {
             return <div className="map-editor-container" ref="mapDoc">
-                <div style={{position: 'relative', left: '48%', top: 300}}>
+                <div style={{position: 'relative', left: '48%', top: 200}}>
                 <Spin />
                 </div>
             </div>
