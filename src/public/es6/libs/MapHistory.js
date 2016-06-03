@@ -12,7 +12,7 @@ class MapHistory {
 
     constructor(map, id, historySize = 16) {
         this.prevStates = new DeQueue(historySize);
-        this.nextStates = new DeQueue(historySize);s
+        this.nextStates = new DeQueue(historySize);
         this.maxSize = historySize;
         this.map = map;
         this.id = id;
