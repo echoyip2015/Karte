@@ -106,57 +106,50 @@ export default class Delaunay {
         }
     }
 
-    triangulate(vertices, key)  {
+    triangulate(vertices)  {
         var n = vertices.length, i, j, indices, st, open, closed, edges, dx, dy, a, b, c;
 
-        /* Bail if there aren't enough vertices to form any triangles. */
+        /* 离散点数小于3 无法生存三角网 */
         if(n < 3)
             return [];
 
-        /* Slice out the actual vertices from the passed objects. (Duplicate the
-         * array even if we don't, though, since we need to make a supertriangle
-         * later on!) */
+        /*拷贝原生数据,避免对原生数据进行修改*/
         vertices = vertices.slice(0);
+        var p = vertices.slice(0);
 
-        if(key)
-            for(i = n; i--; )
-                vertices[i] = vertices[i][key];
 
-        /* Make an array of indices into the vertex array, sorted by the
-         * vertices' x-position. */
+        /*保存离散的数据的编号*/
         indices = new Array(n);
 
         for(i = n; i--; )
-            indices[i] = i;
+            indices[i] = i; //按照原始数据的数组中的位置进行编号
 
         indices.sort(function(i, j) {
             return vertices[j][0] - vertices[i][0];
+            //对原始数据按X坐标排序,实际上是对编号进行了排序.
         });
 
-        /* Next, find the vertices of the supertriangle (which contains all other
-         * triangles), and append them onto the end of a (copy of) the vertex
-         * array. */
+
+        /*计算一个初始的超三角形,该三角形包含了所有的离散点*/
         st = this.supertriangle(vertices);
         vertices.push(st[0], st[1], st[2]);
 
-        /* Initialize the open list (containing the supertriangle and nothing
-         * else) and the closed list (which is empty since we havn't processed
-         * any triangles yet). */
-        open   = [this.circumcircle(vertices, n + 0, n + 1, n + 2)];
+        /* 这里用两个列表保存三角形, open表保存待检测的三角形, closed表保存已经检测的三角形*/
+        open   = [this.circumcircle(vertices, n + 0, n + 1, n + 2)]; //初始只有超三角形待检测
         closed = [];
-        edges  = [];
+        edges  = []; //保存新生成的三角形的边
 
-        /* Incrementally add each vertex to the mesh. */
+        // 逐点循环插入三角网
         for(i = indices.length; i--; edges.length = 0) {
-            c = indices[i];
+            c = indices[i]; //当前待插入点的编号
+            console.log(vertices[c][0]);
 
-            /* For each open triangle, check to see if the current point is
-             * inside it's circumcircle. If it is, remove the triangle and add
-             * it's edges to an edge list. */
+            /* 对于每一个待检测的三角形, 判断当前点是否在其外接圆内
+             * 如果当前点在圆内,则移除该三角形,并与插入的生成新的三角形,讲新三角形的边保存在edges内
+             */
             for(j = open.length; j--; ) {
-                /* If this point is to the right of this triangle's circumcircle,
-                 * then this triangle should never get checked again. Remove it
-                 * from the open list, add it to the closed list, and skip. */
+                /* 优化, 当前x坐标最小的点都在外接圆外部,后面不需要对该三角形进行检查
+                 * 将其从open表删除,加入clode表 */
                 dx = vertices[c][0] - open[j].x;
                 if(dx > 0.0 && dx * dx > open[j].r) {
                     closed.push(open[j]);
@@ -164,24 +157,24 @@ export default class Delaunay {
                     continue;
                 }
 
-                /* If we're outside the circumcircle, skip this triangle. */
+                /* 如果待插入的店在外部,则不生成新三角形. */
                 dy = vertices[c][1] - open[j].y;
                 if(dx * dx + dy * dy - open[j].r > EPSILON)
                     continue;
 
-                /* Remove the triangle and add it's edges to the edge list. */
+                /* 保存当前三角形的边到edge表 */
                 edges.push(
                     open[j].i, open[j].j,
                     open[j].j, open[j].k,
                     open[j].k, open[j].i
                 );
-                open.splice(j, 1);
+                open.splice(j, 1); //从open表删除三角形
             }
 
-            /* Remove any doubled edges. */
+            /* 删除重复的边 */
             this.dedup(edges);
 
-            /* Add a new triangle for each edge. */
+            /* 对于每一条边,都与待插入点连接生成新三角形,并插入open表 */
             for(j = edges.length; j; ) {
                 b = edges[--j];
                 a = edges[--j];
@@ -189,18 +182,19 @@ export default class Delaunay {
             }
         }
 
-        /* Copy any remaining open triangles to the closed list, and then
-         * remove any triangles that share a vertex with the supertriangle,
-         * building a list of triplets that represent triangles. */
+        /* 由于没有待插入点 open表存在的三角形已不需要检查了,将其插入close表,并从open表删除 */
         for(i = open.length; i--; )
             closed.push(open[i]);
         open.length = 0;
 
+        /*
+        * 删除包含超级三角形顶点的三角形
+        * */
         for(i = closed.length; i--; )
             if(closed[i].i < n && closed[i].j < n && closed[i].k < n)
                 open.push(closed[i].i, closed[i].j, closed[i].k);
 
-        /* Yay, we're done! */
+
         return open;
     }
 
