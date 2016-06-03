@@ -191,7 +191,7 @@ class ContourTool extends React.Component {
                 message.error('选择的离散点太少,无法生成三角网!', 2);
                 return;
             }
-            let triangles = Delaunay.triangulate(points);
+            let triangles = new Delaunay().triangulate(points);
             let features = new ol.Collection();
             let pTriangle = [];
             let tMin = Number.POSITIVE_INFINITY;
