@@ -1,5 +1,3 @@
-import DeQueue from './datastruct/queue'
-import {message} from 'antd';
 /**
  *
  * @authors 祝志颖 (c0de4ac@baicizhan.com)
@@ -7,15 +5,14 @@ import {message} from 'antd';
  * @version 1.0.0
  */
 
-
+import DeQueue from './datastruct/queue'
+import {message} from 'antd';
 
 class MapHistory {
 
     constructor(map, id, historySize = 16) {
         this.prevStates = new DeQueue(historySize);
-        this.nextStates = new DeQueue(historySize);
-        this.beforeStates = new DeQueue(historySize);
-        this.endStates = new DeQueue(historySize);
+        this.nextStates = new DeQueue(historySize);s
         this.maxSize = historySize;
         this.map = map;
         this.id = id;

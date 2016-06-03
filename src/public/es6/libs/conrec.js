@@ -136,10 +136,6 @@ class ContourTrance {
         return edge;
     }
 
-    assetValue(value) {
-        //todo
-    }
-
     contourPointCalc(val, start, end) {
         let tempP = new CPoint(0, 0, val);
         let v0 = this.pointList[start].z;
@@ -165,13 +161,21 @@ class ContourTrance {
 
         for (let i = 0; i < this.lineValue.length; i++) {
             let conVal = this.lineValue[i];
-            this.triCheckIndex.clear();
 
+            /*
+            * 检查三角网中的三角边是否包含待追踪的等值边,并将包含等值点的三角形的编号保存在triChcekIndex中
+            * */
+            this.triCheckIndex.clear();
             for (let iTri = 0; iTri < this.triTotal.length; iTri++) {
+
+                /*
+                * 三角形的三个点的高程值
+                * */
                 const tempV0 = this.pointList[this.triTotal[iTri].pointIndex[0]].z;
                 const tempV1 = this.pointList[this.triTotal[iTri].pointIndex[1]].z;
                 const tempV2 = this.pointList[this.triTotal[iTri].pointIndex[2]].z;
 
+                /*判断边上是否包含等值点,若包含则加入已检查列表* 下面两个判断相同*/
                 if((tempV0 - conVal) * (tempV1 - conVal) <= 0) {
                     //console.log((tempV0 - conVal) * (tempV1 - conVal));
                     this.triCheckIndex.add(this.triTotal[iTri].id);
@@ -188,10 +192,12 @@ class ContourTrance {
                     continue;
                 }
             }
+            /*包含等值点的三角形少于2个无法追踪,继续下一个等值点的追踪*/
             if (this.triCheckIndex.size < 2) {
                 continue;
             }
 
+            /*开始追踪开放的等高线*/
             for (let iBound = 0; iBound < this.edgeBandIndex.length; iBound++ ) {
                 let edge = this.edgeBandIndex[iBound];
                 let conLine = new CContourLine();
@@ -201,6 +207,7 @@ class ContourTrance {
                     conLine.listPoint.push(conPoint);
 
                     while (this.triCheckIndex.size > 0) {
+                        /*在triChcekIndex中查找并删除包含等值点的三角形*/
                         let tri = this.searchTriangle(edge);
                         if (tri == -1) {
                             break;
@@ -274,7 +281,6 @@ class ContourTrance {
                         }
                         if (this.triCheckIndex.size == 0) {
                             let point = conLine.listPoint.slice(-1)[0];
-                            console.log(point);
                             conLine.type = 1;
                             if (point &&  this.isEdgeTriangleOnBand(point.listIdEdge[0])) {
                                 conLine.type = 0;
@@ -360,10 +366,6 @@ class ContourTrance {
             }
         }
         return -1;
-    }
-
-    traceFill() {
-        //todo
     }
 }
 

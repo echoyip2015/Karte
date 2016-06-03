@@ -38,7 +38,7 @@ export default class LayerModal extends React.Component {
                     <tr key={index}>
                     <td>{contour.value} m</td>
                     <td>{contour.type == 1 ? '闭合' : '开放'}</td>
-                    <td><a href="javascript:(0)" onClick={this.handleEdit.bind(this, contour)} style={{color: '#2db7f5', fontSize: 12}}>编辑</a></td>
+                    <td><a href="#" onClick={this.handleEdit.bind(this, contour)} style={{color: '#2db7f5', fontSize: 12}}>编辑</a></td>
                 </tr>
             )
             return rows;

@@ -1,6 +1,5 @@
 import CContourLine from './contour/contourline'
 import CPoint from './contour/point'
-var bezier_js = require('bezier');
 var cardinal_spline_js = require('cardinal-spline-js');
 var b_spline_js = require('b-spline');
 

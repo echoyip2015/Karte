@@ -17,7 +17,6 @@ export default class DatLoader {
             feature.getGeometry().set('z', parseFloat(source[i][4]));
             collection.push(feature);
         }
-        console.info(collection);
         return collection;
     }
 

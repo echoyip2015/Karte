@@ -224,6 +224,7 @@ class ContourTool extends React.Component {
             this.getMap().map.addLayer(layer);
             this.getMap().map.getView().fit(extent, this.getMap().map.getSize());
             this.setState({triangle: pTriangle, zMin: tMin, zMax : tMax, triangleLayer: layer});
+            this.getMap().setState({has_modify: true});
             console.log([tMin, tMax]);
         }
     }
@@ -295,6 +296,7 @@ class ContourTool extends React.Component {
                 this.getMap().map.addLayer(layer);
                 this.getMap().map.getView().fit(extent, this.getMap().map.getSize());
                 this.setState({contourLayer: layer});
+                this.getMap().setState({has_modify: true});
             }
             else {
                 message.info('未追踪到等高线!', 2);

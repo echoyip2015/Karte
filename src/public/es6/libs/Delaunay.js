@@ -108,15 +108,12 @@ export default class Delaunay {
 
     triangulate(vertices)  {
         var n = vertices.length, i, j, indices, st, open, closed, edges, dx, dy, a, b, c;
-
         /* 离散点数小于3 无法生存三角网 */
         if(n < 3)
             return [];
 
         /*拷贝原生数据,避免对原生数据进行修改*/
         vertices = vertices.slice(0);
-        var p = vertices.slice(0);
-
 
         /*保存离散的数据的编号*/
         indices = new Array(n);
@@ -128,8 +125,6 @@ export default class Delaunay {
             return vertices[j][0] - vertices[i][0];
             //对原始数据按X坐标排序,实际上是对编号进行了排序.
         });
-
-
         /*计算一个初始的超三角形,该三角形包含了所有的离散点*/
         st = this.supertriangle(vertices);
         vertices.push(st[0], st[1], st[2]);
@@ -156,12 +151,10 @@ export default class Delaunay {
                     open.splice(j, 1);
                     continue;
                 }
-
                 /* 如果待插入的店在外部,则不生成新三角形. */
                 dy = vertices[c][1] - open[j].y;
                 if(dx * dx + dy * dy - open[j].r > EPSILON)
                     continue;
-
                 /* 保存当前三角形的边到edge表 */
                 edges.push(
                     open[j].i, open[j].j,
@@ -170,7 +163,6 @@ export default class Delaunay {
                 );
                 open.splice(j, 1); //从open表删除三角形
             }
-
             /* 删除重复的边 */
             this.dedup(edges);
 
@@ -181,12 +173,10 @@ export default class Delaunay {
                 open.push(this.circumcircle(vertices, a, b, c));
             }
         }
-
         /* 由于没有待插入点 open表存在的三角形已不需要检查了,将其插入close表,并从open表删除 */
         for(i = open.length; i--; )
             closed.push(open[i]);
         open.length = 0;
-
         /*
         * 删除包含超级三角形顶点的三角形
         * */
