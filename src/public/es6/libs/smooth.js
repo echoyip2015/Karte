@@ -21,6 +21,9 @@ export default class Smooth {
             for (let i = 0; i < points.length; i++) {
                 inpts.push([points[i].x, points[i].y]);
             }
+            if (contour.type == 1) {
+                inpts.push([points[0].x, points[0].y]);
+            }
             for (let i = 0; i < 1; i += 0.01) {
                 let outpts = b_spline_js(i, 3, inpts);
                 let pt = new CPoint(outpts[0], outpts[1], evel);

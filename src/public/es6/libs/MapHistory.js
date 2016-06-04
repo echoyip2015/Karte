@@ -31,7 +31,7 @@ class MapHistory {
         };
         console.log(state);
         this.prevStates.pushBack(state);
-        this.nextStates.clear()
+        this.nextStates.clear();
         this.map.setState({has_modify: true});
     }
 
